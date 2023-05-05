@@ -7,6 +7,7 @@ app.set("view engine", "ejs");
 app.listen(port);
 
 app.use(morgan("dev"));
+app.use(express.static("static"));
 app.get("/", (req, res) => {
   const ress = [
     {
