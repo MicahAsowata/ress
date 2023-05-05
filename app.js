@@ -9,7 +9,7 @@ app.set("view-engine", "ejs");
 app.listen(port);
 
 app.get("/", (req, res) => {
-  res.sendFile("./views/index.html", root);
+  res.render("index");
 });
 
 app.get("/about", (req, res) => {
