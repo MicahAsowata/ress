@@ -4,16 +4,17 @@ const port = 3000;
 const root = {
   root: __dirname,
 };
-app.set("view-engine", "ejs");
 
 app.listen(port);
+
+app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   res.render("index");
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile("./views/about.html", root);
+  res.render("about");
 });
 
 app.get("/about-us", (req, res) => {
@@ -21,5 +22,5 @@ app.get("/about-us", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).sendFile("./views/404.html", root);
+  res.status(404).render("404");
 });
