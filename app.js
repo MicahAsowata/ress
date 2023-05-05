@@ -1,16 +1,12 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 const port = 3000;
 app.set("view engine", "ejs");
 
 app.listen(port);
 
-app.use((req, res, next) => {
-  console.log(
-    `${req.method} request was made to ${req.path} by ${req.hostname}`
-  );
-  next();
-});
+app.use(morgan("dev"));
 app.get("/", (req, res) => {
   const ress = [
     {
