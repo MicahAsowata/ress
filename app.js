@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-app.listen(port);
-
 app.set("view engine", "ejs");
 
+app.listen(port);
+
+app.use((req, res, next) => {
+  console.log(
+    `${req.method} request was made to ${req.path} by ${req.hostname}`
+  );
+  next();
+});
 app.get("/", (req, res) => {
   const ress = [
     {
