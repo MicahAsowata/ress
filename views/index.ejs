@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ress | <%= title %></title>
-</head>
-<body>
-    <header>
-        <%- include ('./partials/nav.ejs') %>
-    </header>
+  <%- include ('./partials/head.ejs') %>
+  <body>
+    <header><%- include ('./partials/nav.ejs') %></header>
     <main>
-        <h2>All Ress</h2>
-        <% if (ress.length > 0) { %>
-            <% ress.forEach(ress => { %>
-                <h3><%= ress.title %></h3>
-                <p><%= ress.body %></p>
-            <% }) %>
-        <% } else { %> 
-            <h1>You have no Ress</h1>
-        <% }%>
-         
+      <h2>All Ress</h2>
+      <% if (ress.length > 0) { %> <% ress.forEach(ress => { %>
+      <h3><%= ress.title %></h3>
+      <p><%= ress.body %></p>
+      <% }) %> <% } else { %>
+      <h1>You have no Ress</h1>
+      <% }%>
     </main>
-</body>
+  </body>
 </html>
