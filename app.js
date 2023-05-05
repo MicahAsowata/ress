@@ -6,7 +6,24 @@ app.listen(port);
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
+  const ress = [
+    {
+      title: "Example 1",
+      snippet: "This is an example snippet.",
+      body: "This is an example body. It can contain more detailed information about the example.",
+    },
+    {
+      title: "Example 2",
+      snippet: "Another example snippet.",
+      body: "This is a different example body. It could contain information about how the example differs from the first one.",
+    },
+    {
+      title: "Example 3",
+      snippet: "Yet another example snippet.",
+      body: "And here's another example body. This one could provide information about a completely different aspect of the object.",
+    },
+  ];
+  res.render("index", { title: "Home", ress: ress });
 });
 
 app.get("/about", (req, res) => {
