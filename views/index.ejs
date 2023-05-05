@@ -6,8 +6,13 @@
     <main>
       <h2>All Ress</h2>
       <% if (ress.length > 0) { %> <% ress.forEach(ress => { %>
-      <h3><%= ress.title %></h3>
-      <p><%= ress.body %></p>
+        <article>
+          <header>
+            <h3><%= ress.title %></h3>
+          </header>
+          <p><%= ress.body %></p>
+          <footer>Read More 👉🏾</footer>
+        </article>
       <% }) %> <% } else { %>
       <h1>You have no Ress</h1>
       <% }%>
