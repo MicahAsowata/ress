@@ -13,3 +13,7 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
   res.sendFile("./views/about.html", root);
 });
+
+app.get("/about-us", (req, res) => {
+  res.redirect("/about");
+});
