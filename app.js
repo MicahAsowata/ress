@@ -4,6 +4,8 @@ const port = 3000;
 const root = {
   root: __dirname,
 };
+app.set("view-engine", "ejs");
+
 app.listen(port);
 
 app.get("/", (req, res) => {
