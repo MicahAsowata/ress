@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
   <%- include ('./partials/head.ejs') %>
   <body>
     <header><%- include ('./partials/nav.ejs') %></header>
@@ -10,8 +9,13 @@
           <header>
             <h3><%= ress.title %></h3>
           </header>
-          <p><%= ress.body %></p>
-          <footer>Read More 👉🏾</footer>
+          <p><%= ress.snippet %></p>
+          <footer>
+            <details>
+              <summary>Read More 👉🏾</summary>
+              <p><%= ress.body %></p>
+            </details>
+          </footer>
         </article>
       <% }) %> <% } else { %>
       <h1>You have no Ress</h1>
