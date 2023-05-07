@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const port = 3000;
+const dbURI = process.env.DB_URI;
 app.set("view engine", "ejs");
 
 app.listen(port);
