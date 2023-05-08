@@ -19,7 +19,8 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.3.0",
-    "sequelize": "^6.31.1"
+    "sequelize": "^6.31.1",
+    "validatorjs": "^3.22.1"
   },
   "devDependencies": {
     "prisma": "^4.13.0"

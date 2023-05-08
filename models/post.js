@@ -1,5 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const { exit } = require("node:process");
+const validator = require("validatorjs");
+const lodash = require("lodash");
 const prisma = new PrismaClient();
 
 async function main() {
@@ -14,7 +16,33 @@ async function main() {
   }
 }
 
+async function addPost(title, snippet, body) {
+  const strTitle = lodash.toString(title);
+  const strSnippet = lodash.toString(snippet);
+  const strBody = lodash.toString(body);
+  const rules = {
+    title: "required|max:100",
+    snippet: "required|max:250",
+    content: "required",
+  };
+  const postData = {
+    title: strTitle,
+    snippet: strSnippet,
+    content: strBody,
+  };
+  const validation = new validator(postData, rules);
+
+  if (validation.passes()) {
+    // create user
+    await prisma.post.create({
+      data: postData,
+    });
+  } else if (validation.fails()) {
+    return "Validation failed";
+  }
+}
 module.exports = {
   main,
   prisma,
+  addPost,
 };
