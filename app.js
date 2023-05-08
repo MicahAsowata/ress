@@ -1,27 +1,10 @@
 require("dotenv").config();
-// const { Sequelize } = require("sequelize");
 const express = require("express");
 const morgan = require("morgan");
-const { sequelize, Ress } = require("./models/ress");
 const app = express();
 const port = 3000;
 
 app.listen(port);
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-    Ress.sync()
-      .then(() => {
-        console.log("Tables successfully created");
-      })
-      .catch((err) => {
-        console.log("Unable to create table", err);
-      });
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database:", error);
-  });
 
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
