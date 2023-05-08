@@ -1,10 +1,19 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const { prisma, main } = require("./models/post");
 const app = express();
 const port = 3000;
 
-app.listen(port);
+main()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is listening at http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Could not start server", error);
+  });
 
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
