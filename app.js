@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const { prisma, main } = require("./models/post");
+const { where } = require("sequelize");
 const app = express();
 const port = 3000;
 
@@ -18,6 +19,17 @@ main()
 app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.static("static"));
+app.get("/view-blog", (req, res) => {
+  const postRess = prisma.post.findUnique({
+    where: {
+      id: 1,
+    },
+  });
+
+  postRess
+    .then((post) => res.send(JSON.stringify(post)))
+    .catch((err) => console.error(err));
+});
 app.get("/", (req, res) => {
   const ress = [
     {
