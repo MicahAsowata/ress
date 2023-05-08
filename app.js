@@ -1,12 +1,30 @@
 require("dotenv").config();
+const { Sequelize } = require("sequelize");
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const port = 3000;
-app.set("view engine", "ejs");
+const dbName = process.env.DB_NAME;
+const username = process.env.DB_USERNAME;
+const dbPassword = process.env.DB_PASSWORD;
+
+const sequelize = new Sequelize(dbName, username, dbPassword, {
+  host: "localhost",
+  dialect: "mysql",
+});
+
+sequelize
+  .authenticate()
+  .then((result) =>
+    console.log("Connection has been established successfully.")
+  )
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
 
 app.listen(port);
 
+app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.static("static"));
 app.get("/", (req, res) => {
