@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const {
   main,
-  addPost,
+  createPost,
   getPostByID,
   getAllPosts,
   deletePost,
@@ -25,11 +25,11 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.static("static"));
 app.get("/add-blog", (req, res) => {
-  const postTitle = "hello new post";
-  const postSnippet = "hello new post snippet";
-  const postBody = "hello new post body";
+  const postTitle = "hello test";
+  const postSnippet = "hello new test snippet";
+  const postBody = "hello new test body";
 
-  addPost(postTitle, postSnippet, postBody)
+  createPost(postTitle, postSnippet, postBody)
     .then(() => {
       res.send(
         JSON.stringify({
