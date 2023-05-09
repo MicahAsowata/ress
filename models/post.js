@@ -44,7 +44,7 @@ async function createPost(title, snippet, content) {
 async function getPostByID(id) {
   const post = await prisma.post.findUnique({
     where: {
-      id: lodash.toNumber(id),
+      id: lodash.toString(id),
     },
   });
 
@@ -58,7 +58,7 @@ async function getAllPosts() {
 }
 
 async function deletePost(id) {
-  const intID = lodash.toNumber(id);
+  const intID = lodash.toString(id);
 
   const post = await prisma.post.delete({
     where: {

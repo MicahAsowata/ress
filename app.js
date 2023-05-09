@@ -50,7 +50,7 @@ app.get("/view-blog", (req, res) => {
 });
 
 app.get("/delete-post", (req, res) => {
-  const id = 2;
+  const id = 3;
   const delPost = deletePost(id);
 
   delPost.then((post) => res.send(post)).catch((e) => console.error(e));
