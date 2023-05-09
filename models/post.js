@@ -57,10 +57,23 @@ async function getAllPosts() {
 
   return allPosts;
 }
+
+async function deletePost(id) {
+  const intID = lodash.toNumber(id);
+
+  const deletedPost = await prisma.post.delete({
+    where: {
+      id: intID,
+    },
+  });
+
+  return deletedPost;
+}
 module.exports = {
   main,
   prisma,
   addPost,
   getPostByID,
   getAllPosts,
+  deletePost,
 };

@@ -1,7 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const { main, addPost, getPostByID, getAllPosts } = require("./models/post");
+const {
+  main,
+  addPost,
+  getPostByID,
+  getAllPosts,
+  deletePost,
+} = require("./models/post");
 const app = express();
 const port = 3000;
 
@@ -41,6 +47,13 @@ app.get("/view-blog", (req, res) => {
 
   ressPost.then((post) => res.send(post)).catch((e) => console.error(e));
   // console.log(ressPost + "Hello");
+});
+
+app.get("/delete-post", (req, res) => {
+  const id = 2;
+  const delPost = deletePost(id);
+
+  delPost.then((post) => res.send(post)).catch((e) => console.error(e));
 });
 app.get("/", (req, res) => {
   // const ress = [
