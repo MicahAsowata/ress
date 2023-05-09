@@ -41,8 +41,26 @@ async function addPost(title, snippet, body) {
     return "Validation failed";
   }
 }
+
+async function getPostByID(id) {
+  const postRess = await prisma.post.findUnique({
+    where: {
+      id: lodash.toNumber(id),
+    },
+  });
+
+  return postRess;
+}
+
+async function getAllPosts() {
+  const allPosts = await prisma.post.findMany();
+
+  return allPosts;
+}
 module.exports = {
   main,
   prisma,
   addPost,
+  getPostByID,
+  getAllPosts,
 };
