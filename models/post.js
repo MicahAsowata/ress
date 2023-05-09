@@ -16,10 +16,10 @@ async function main() {
   }
 }
 
-async function addPost(title, snippet, body) {
+async function createPost(title, snippet, content) {
   const strTitle = lodash.toString(title);
   const strSnippet = lodash.toString(snippet);
-  const strBody = lodash.toString(body);
+  const strContent = lodash.toString(content);
   const rules = {
     title: "required|max:100",
     snippet: "required|max:250",
@@ -28,12 +28,11 @@ async function addPost(title, snippet, body) {
   const postData = {
     title: strTitle,
     snippet: strSnippet,
-    content: strBody,
+    content: strContent,
   };
   const validation = new validator(postData, rules);
 
   if (validation.passes()) {
-    // create user
     await prisma.post.create({
       data: postData,
     });
@@ -43,36 +42,35 @@ async function addPost(title, snippet, body) {
 }
 
 async function getPostByID(id) {
-  const postRess = await prisma.post.findUnique({
+  const post = await prisma.post.findUnique({
     where: {
       id: lodash.toNumber(id),
     },
   });
 
-  return postRess;
+  return post;
 }
 
 async function getAllPosts() {
-  const allPosts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany();
 
-  return allPosts;
+  return posts;
 }
 
 async function deletePost(id) {
   const intID = lodash.toNumber(id);
 
-  const deletedPost = await prisma.post.delete({
+  const post = await prisma.post.delete({
     where: {
       id: intID,
     },
   });
 
-  return deletedPost;
+  return post;
 }
 module.exports = {
   main,
-  prisma,
-  addPost,
+  createPost,
   getPostByID,
   getAllPosts,
   deletePost,
