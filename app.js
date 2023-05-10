@@ -47,12 +47,10 @@ app.get("/blogs", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res
-        .status(500)
-        .render("error", {
-          title: "Server error",
-          message: "Could not fetch data from server",
-        });
+      res.status(500).render("error", {
+        title: "Server error",
+        message: "Could not fetch data from server",
+      });
     });
 });
 app.get("/blog/new", (req, res) => {
@@ -105,8 +103,6 @@ app.get("/blog/:id", (req, res) => {
     },
   });
 
-  console.log(post);
-
   post
     .then((post) => {
       res.render("ress", { title: post.title, ress: post });
@@ -120,8 +116,25 @@ app.get("/blog/:id", (req, res) => {
     });
 });
 
-app.delete("/blog/delete", (req, res) => {
-  res.send("Deleting blog...");
+app.get("/blog/delete/:id", (req, res) => {
+  const id = lodash.toString(req.params.id);
+  const post = prisma.post.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  post
+    .then(() => {
+      res.redirect("/blogs");
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).render("error", {
+        title: "Server Error",
+        message: "Could not fetch ress from server",
+      });
+    });
 });
 
 app.use((req, res) => {
