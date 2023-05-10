@@ -70,8 +70,4 @@ async function deletePost(id) {
 }
 module.exports = {
   main,
-  createPost,
-  getPostByID,
-  getAllPosts,
-  deletePost,
 };
