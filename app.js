@@ -2,11 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const { PrismaClient } = require("@prisma/client");
-const { main } = require("./models/post");
-const { exit } = require("node:process");
 const validator = require("validatorjs");
 const lodash = require("lodash");
+
+const { main } = require("./models/post");
+
 const prisma = new PrismaClient();
+
 const app = express();
 const port = 3000;
 
@@ -24,6 +26,7 @@ app.set("view engine", "ejs");
 
 app.use(morgan("dev"));
 app.use(express.static("static"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.redirect("/blogs");
@@ -55,9 +58,9 @@ app.get("/blog/view/", (req, res) => {
   res.send("Viewing blog...");
 });
 app.post("/blog/create", (req, res) => {
-  const strTitle = lodash.toString(title);
-  const strSnippet = lodash.toString(snippet);
-  const strContent = lodash.toString(content);
+  const strTitle = lodash.toString(req.body.title);
+  const strSnippet = lodash.toString(req.body.snippet);
+  const strContent = lodash.toString(req.body.content);
   const rules = {
     title: "required|max:100",
     snippet: "required|max:250",
@@ -69,17 +72,20 @@ app.post("/blog/create", (req, res) => {
     content: strContent,
   };
   const validation = new validator(postData, rules);
-
   if (validation.passes()) {
     prisma.post
       .create({
         data: postData,
       })
       .then(() => {
-        res.status(200).render("Created new post successfullyu");
+        res.redirect("/");
+      })
+      .catch((error) => {
+        res.status(500).render("Could not create the post");
       });
+    return;
   } else if (validation.fails()) {
-    return "Validation failed";
+    res.status(402).render("Invalid form data");
   }
 });
 
