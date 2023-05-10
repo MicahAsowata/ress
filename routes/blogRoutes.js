@@ -1,110 +1,20 @@
 const express = require("express");
-const { PrismaClient } = require("@prisma/client");
-const validator = require("validatorjs");
-const lodash = require("lodash");
-const prisma = new PrismaClient();
+const {
+  blog_index,
+  blog_create_get,
+  blog_create_post,
+  blog_delete,
+  blog_details,
+} = require("../controller/blogController");
 const router = express.Router();
-router.get("/", (req, res) => {
-  const posts = prisma.post
-    .findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-    })
-    .then((posts) => {
-      res.render("index", { title: "All posts", ress: posts });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).render("error", {
-        title: "Server error",
-        message: "Could not fetch data from server",
-      });
-    });
-});
-router.get("/new", (req, res) => {
-  res.render("create", { title: "Create" });
-});
+router.get("/", blog_index);
+router.get("/new", blog_create_get);
 
-router.post("/create", (req, res) => {
-  const strTitle = lodash.toString(req.body.title);
-  const strSnippet = lodash.toString(req.body.snippet);
-  const strContent = lodash.toString(req.body.content);
-  const rules = {
-    title: "required|max:100",
-    snippet: "required|max:250",
-    content: "required",
-  };
-  const postData = {
-    title: strTitle,
-    snippet: strSnippet,
-    content: strContent,
-  };
-  const validation = new validator(postData, rules);
-  if (validation.passes()) {
-    prisma.post
-      .create({
-        data: postData,
-      })
-      .then(() => {
-        res.redirect("/");
-      })
-      .catch((error) => {
-        res.status(500).render("error", {
-          title: "Server Error",
-          message: "Could not create ress",
-        });
-      });
-    return;
-  } else if (validation.fails()) {
-    res.status(402).render("error", {
-      title: "Invalid form data",
-      message: "Too much errors from your form",
-    });
-  }
-});
+router.post("/create", blog_create_post);
 
-router.get("/:id", (req, res) => {
-  const id = lodash.toString(req.params.id);
-  const post = prisma.post.findUnique({
-    where: {
-      id: id,
-    },
-  });
+router.get("/:id", blog_details);
 
-  post
-    .then((post) => {
-      res.render("ress", { title: post.title, ress: post });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).render("error", {
-        title: "Server Error",
-        message: "Could not fetch ress from server",
-      });
-    });
-});
-
-router.get("/delete/:id", (req, res) => {
-  const id = lodash.toString(req.params.id);
-  const post = prisma.post.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  post
-    .then(() => {
-      res.redirect("/s");
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).render("error", {
-        title: "Server Error",
-        message: "Could not fetch ress from server",
-      });
-    });
-});
+router.get("/delete/:id", blog_delete);
 
 module.exports = {
   router,
