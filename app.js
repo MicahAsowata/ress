@@ -54,9 +54,6 @@ app.get("/blog/new", (req, res) => {
   res.render("create", { title: "Create" });
 });
 
-app.get("/blog/view/", (req, res) => {
-  res.send("Viewing blog...");
-});
 app.post("/blog/create", (req, res) => {
   const strTitle = lodash.toString(req.body.title);
   const strSnippet = lodash.toString(req.body.snippet);
@@ -89,7 +86,27 @@ app.post("/blog/create", (req, res) => {
   }
 });
 
-app.get("/blog/delete", (req, res) => {
+app.get("/blog/:id", (req, res) => {
+  const id = lodash.toString(req.params.id);
+  const post = prisma.post.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  console.log(post);
+
+  post
+    .then((post) => {
+      res.render("ress", { title: post.title, ress: post });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).render("Could not fetch post from server");
+    });
+});
+
+app.delete("/blog/delete", (req, res) => {
   res.send("Deleting blog...");
 });
 

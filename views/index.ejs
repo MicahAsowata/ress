@@ -11,10 +11,7 @@
           </header>
           <p><%= ress.snippet %></p>
           <footer>
-            <details>
-              <summary>Read More 👉🏾</summary>
-              <p><%= ress.content %></p>
-            </details>
+            <a href="/blog/<%= ress.id %>"> Read more 👉🏾</a>
           </footer>
         </article>
       <% }) %> <% } else { %>
