@@ -4,7 +4,7 @@ const validator = require("validatorjs");
 const lodash = require("lodash");
 const prisma = new PrismaClient();
 const router = express.Router();
-router.get("/blogs", (req, res) => {
+router.get("/", (req, res) => {
   const posts = prisma.post
     .findMany({
       orderBy: {
@@ -22,11 +22,11 @@ router.get("/blogs", (req, res) => {
       });
     });
 });
-router.get("/blog/new", (req, res) => {
+router.get("/new", (req, res) => {
   res.render("create", { title: "Create" });
 });
 
-router.post("/blog/create", (req, res) => {
+router.post("/create", (req, res) => {
   const strTitle = lodash.toString(req.body.title);
   const strSnippet = lodash.toString(req.body.snippet);
   const strContent = lodash.toString(req.body.content);
@@ -64,7 +64,7 @@ router.post("/blog/create", (req, res) => {
   }
 });
 
-router.get("/blog/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const id = lodash.toString(req.params.id);
   const post = prisma.post.findUnique({
     where: {
@@ -85,7 +85,7 @@ router.get("/blog/:id", (req, res) => {
     });
 });
 
-router.get("/blog/delete/:id", (req, res) => {
+router.get("/delete/:id", (req, res) => {
   const id = lodash.toString(req.params.id);
   const post = prisma.post.delete({
     where: {
@@ -95,7 +95,7 @@ router.get("/blog/delete/:id", (req, res) => {
 
   post
     .then(() => {
-      res.redirect("/blogs");
+      res.redirect("/s");
     })
     .catch((error) => {
       console.error(error);

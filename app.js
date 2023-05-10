@@ -22,12 +22,12 @@ app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.redirect("/blogs");
+  res.redirect("/blog");
 });
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
-app.use(router);
+app.use("/blog", router);
 app.use((req, res) => {
   res.status(404).render("error", { title: "Not Found", message: "🙅🏾‍♂️🙅🏾‍♂️🙅🏾‍♂️🙅🏾‍♂️" });
 });
