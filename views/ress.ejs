@@ -5,7 +5,6 @@
         <header><%- include ('./partials/nav.ejs') %></header>
         <main>
             <article>
-                <% if (ress.length !==0) { %>
                     <header>
                         <h2>
                             <%= ress.title %>
@@ -18,9 +17,6 @@
                     <footer>
                         <a href="/blogs">See all ress</a>
                     </footer>
-                    <% } else { %>
-                        <h1>That ress does not exist</h1>
-                     <% } %>
                     
             </article>
             

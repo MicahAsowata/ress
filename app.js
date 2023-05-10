@@ -47,7 +47,12 @@ app.get("/blogs", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.status(500).render("Error fetching data from server");
+      res
+        .status(500)
+        .render("error", {
+          title: "Server error",
+          message: "Could not fetch data from server",
+        });
     });
 });
 app.get("/blog/new", (req, res) => {
@@ -78,11 +83,17 @@ app.post("/blog/create", (req, res) => {
         res.redirect("/");
       })
       .catch((error) => {
-        res.status(500).render("Could not create the post");
+        res.status(500).render("error", {
+          title: "Server Error",
+          message: "Could not create ress",
+        });
       });
     return;
   } else if (validation.fails()) {
-    res.status(402).render("Invalid form data");
+    res.status(402).render("error", {
+      title: "Invalid form data",
+      message: "Too much errors from your form",
+    });
   }
 });
 
@@ -102,7 +113,10 @@ app.get("/blog/:id", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.status(500).render("Could not fetch post from server");
+      res.status(500).render("error", {
+        title: "Server Error",
+        message: "Could not fetch ress from server",
+      });
     });
 });
 
@@ -111,5 +125,5 @@ app.delete("/blog/delete", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render("404", { title: "Not Found" });
+  res.status(404).render("error", { title: "Not Found", message: "🙅🏾‍♂️🙅🏾‍♂️🙅🏾‍♂️🙅🏾‍♂️" });
 });
