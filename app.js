@@ -16,8 +16,6 @@ main()
     console.error("Could not start server", error);
   });
 
-// app.set("views", lodash.toString(`${__dirname}/views`));
-// app.set("views", )
 app.set("view engine", "ejs");
 app.set();
 
