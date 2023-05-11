@@ -10,7 +10,7 @@ const blog_index = (req, res) => {
       },
     })
     .then((posts) => {
-      res.render("index", { title: "All posts", ress: posts });
+      res.render("blog/index", { title: "All posts", ress: posts });
     })
     .catch((error) => {
       console.error(error);
@@ -30,7 +30,7 @@ const blog_details = (req, res) => {
 
   post
     .then((post) => {
-      res.render("ress", { title: post.title, ress: post });
+      res.render("blog/ress", { title: post.title, ress: post });
     })
     .catch((error) => {
       console.error(error);
@@ -42,7 +42,7 @@ const blog_details = (req, res) => {
 };
 
 const blog_create_get = (req, res) => {
-  res.render("create", { title: "Create" });
+  res.render("blog/create", { title: "Create" });
 };
 
 const blog_create_post = (req, res) => {

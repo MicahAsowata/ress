@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const lodash = require("lodash");
 const { main } = require("./models/post");
 const { router } = require("./routes/blogRoutes");
 const app = express();
@@ -15,7 +16,10 @@ main()
     console.error("Could not start server", error);
   });
 
+// app.set("views", lodash.toString(`${__dirname}/views`));
+// app.set("views", )
 app.set("view engine", "ejs");
+app.set();
 
 app.use(morgan("dev"));
 app.use(express.static("static"));
